@@ -1,28 +1,26 @@
 module Mutations
   module Comments
-    class CreateCommand < GraphQL::Schema::Mutation
-      description 'Create a comment on an existing post.'
+    class UpdateCommand < GraphQL::Schema::Mutation
+      description 'Update an existing post comment.'
 
       argument :body, String, required: true
       argument :postId, ID, required: true, as: :post_id
+      argument :commentId, ID, required: true, as: :comment_id
 
       field :comment, Types::CommentType, null: true
       field :errors, [String, null: true], null: false
 
       class << self
         def name
-          'CreateCommentCommand'
+          'UpdateCommentCommand'
         end
       end
 
-      def resolve(body:, post_id:)
+      def resolve(body:, post_id:, comment_id:)
         post = Post.find(post_id)
-        comment = post.comments.build(
-          body: body,
-          user_id: context[:current_user].id
-        )
+        comment = post.comments.find(comment_id)
 
-        if comment.save
+        if comment.update(body: body)
           # Successful creation, return the created object with no errors
           {
             comment: comment,

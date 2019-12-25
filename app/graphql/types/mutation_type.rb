@@ -4,5 +4,6 @@ module Types
     field :create_post, mutation: Mutations::Posts::CreateCommand
     field :update_post, mutation: Mutations::Posts::UpdateCommand
     field :create_comment, mutation: Mutations::Comments::CreateCommand
+    field :update_comment, mutation: Mutations::Comments::UpdateCommand
   end
 end
