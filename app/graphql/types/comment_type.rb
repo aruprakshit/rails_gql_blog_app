@@ -1,10 +1,10 @@
 module Types
-  class PostType < Types::BaseObject
-    description "A community post"
+  class CommentType < Types::BaseObject
+    description "A community post comment"
 
     field :id, ID, null: false
     field :body, String, null: false
     field :owner, UserType, null: false, method: :user
-    field :comments, [CommentType], null: false
+    field :post, PostType, null: false
   end
 end
