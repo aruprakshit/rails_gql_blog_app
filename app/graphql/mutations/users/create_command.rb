@@ -8,6 +8,12 @@ module Mutations
       field :user, Types::UserType, null: true
       field :errors, [String, null: true], null: false
 
+      class << self
+        def name
+          'CreateUserCommand'
+        end
+      end
+
       def resolve(email:, username:, gender:)
         user = User.new(
           email: email,

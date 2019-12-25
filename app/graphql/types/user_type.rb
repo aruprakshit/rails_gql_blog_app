@@ -6,5 +6,7 @@ module Types
     field :username, String, null: false
     field :email, String, null: false
     field :gender, UserGender, null: false
+
+    field :ownedPosts, [PostType, null: true], null: false, method: :posts
   end
 end
