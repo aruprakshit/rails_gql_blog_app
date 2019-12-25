@@ -3,5 +3,5 @@ class User < ApplicationRecord
 
   has_many :posts
   has_many :comments
-  has_many :posts_by_comment, through: :comments
+  has_many :posts_by_comments, through: :comments, source: :post
 end

@@ -7,6 +7,7 @@ module Types
     field :email, String, null: false
     field :gender, UserGender, null: false
 
-    field :ownedPosts, [PostType, null: true], null: false, method: :posts
+    field :ownedPosts, [PostType], null: false, method: :posts
+    field :postsCommentedOn, [PostType], null: false, method: :posts_by_comments
   end
 end
