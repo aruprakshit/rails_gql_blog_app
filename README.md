@@ -6,4 +6,12 @@
 
 
 # Features
+
+## Mutations
+
 - [ ] Make sure users can't vote twice on the same post/comment.
+- [ ] Ability to undo votes
+
+## Queries
+
+- [ ] Get comments/posts have not votes
