@@ -3,7 +3,11 @@
 - https://graphqlmastery.com/blog/graphql-interfaces-and-unions-how-to-design-graphql-schema
 - https://blog.logrocket.com/handling-graphql-errors-like-a-champ-with-unions-and-interfaces/
 - https://pawelurbanek.com/uuid-order-rails
-
+- https://github.com/nearform/graphql-hooks
+- https://www.nearform.com/blog/introducing-graphql-hooks/
+- https://www.apollographql.com/docs/react/networking/authentication/
+- https://github.com/kleinjm/vue_graphql_auth_example/blob/master/app/controllers/application_controller.rb
+- https://engineering.doximity.com/articles/token-authentication-with-rails-vue-graphql-and-devise
 
 # Features
 
