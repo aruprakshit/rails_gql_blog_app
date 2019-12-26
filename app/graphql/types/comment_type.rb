@@ -6,5 +6,6 @@ module Types
     field :body, String, null: false
     field :owner, UserType, null: false, method: :user
     field :post, PostType, null: false
+    field :ratings, [RatingType], null: false
   end
 end
