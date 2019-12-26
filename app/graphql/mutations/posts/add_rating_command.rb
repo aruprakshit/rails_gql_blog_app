@@ -1,7 +1,7 @@
 module Mutations
   module Posts
     class AddRatingCommand < GraphQL::Schema::Mutation
-      description 'Create a comment on an existing post.'
+      description 'Add rating to an existing post.'
 
       argument :category, Types::RatingCategory, required: true
       argument :postId, ID, required: true, as: :post_id

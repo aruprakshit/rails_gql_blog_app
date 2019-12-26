@@ -5,9 +5,11 @@ module Types
     field :create_post, mutation: Mutations::Posts::CreateCommand
     field :update_post, mutation: Mutations::Posts::UpdateCommand
     field :add_rating_to_post, mutation: Mutations::Posts::AddRatingCommand
+    field :undo_rating_to_post, mutation: Mutations::Posts::RemoveRatingCommand
 
     field :create_comment, mutation: Mutations::Comments::CreateCommand
     field :update_comment, mutation: Mutations::Comments::UpdateCommand
     field :add_rating_to_comment, mutation: Mutations::Comments::AddRatingCommand
+    field :undo_rating_to_comment, mutation: Mutations::Comments::RemoveRatingCommand
   end
 end

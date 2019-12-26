@@ -1,28 +1,25 @@
 module Mutations
   module Comments
-    class AddRatingCommand < GraphQL::Schema::Mutation
-      description 'Add rating to a comment on an existing post.'
+    class RemoveRatingCommand < GraphQL::Schema::Mutation
+      description 'Remove rating from a comment on an existing post.'
 
-      argument :category, Types::RatingCategory, required: true
       argument :commentId, ID, required: true, as: :comment_id
+      argument :ratingId, ID, required: true, as: :rating_id
 
       field :rating, Types::RatingType, null: true
       field :errors, [String, null: true], null: false
 
       class << self
         def name
-          'AddRatingCommentCommand'
+          'RemoveRatingCommentCommand'
         end
       end
 
-      def resolve(category:, comment_id:)
+      def resolve(rating_id:, comment_id:)
         comment = Comment.find(comment_id)
-        rating = comment.ratings.build(
-          category: category,
-          user_id: context[:current_user].id
-        )
+        rating = comment.ratings.find(rating_id)
 
-        if rating.save
+        if rating.destroy
           # Successful creation, return the created object with no errors
           {
             rating: rating,

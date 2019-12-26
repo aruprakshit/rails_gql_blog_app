@@ -10,8 +10,13 @@
 ## Mutations
 
 - [ ] Make sure users can't vote twice on the same post/comment.
-- [ ] Ability to undo votes
+- [x] Ability to undo votes
+- [ ] Handle 404 errors in Graphql
+- [ ] Add authentications
+- [ ] Add pagination
 
 ## Queries
 
 - [ ] Get comments/posts have not votes
+- [ ] Handle 404 errors in Graphql
+- [ ] Get rated only posts/comments
