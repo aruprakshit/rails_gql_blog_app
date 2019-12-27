@@ -43,9 +43,9 @@ module GqlBlogApp
       :cookie_store,
       key: '_gql_blog_api_session',
       httponly: true,
-      expire_after: 14.days
+      expire_after: 5.days
     )  # <-- this also configures session_options for use below
     config.middleware.use ActionDispatch::Cookies # Required for all session management (regardless of session_store)
-    config.middleware.use config.session_store
+    config.middleware.use config.session_store, config.session_options
   end
 end

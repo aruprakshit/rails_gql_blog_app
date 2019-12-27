@@ -1,17 +1,9 @@
 class ApplicationController < ActionController::API
-  include ActionView::Layouts
-
-  #before_action :handle_html_requests
+  # include ActionView::Layouts
 
   # Avoid having an empty view file.
   def index
-    render inline: "", layout: 'application'
-  end
-
-  private
-
-  # Required for initial page load so that the entire app isn't served as json
-  def handle_html_requests
-    render "layouts/application" if request.format.symbol == :html
+    # ActionView::Layouts.render inline: "", layout: 'application'
+    send_file "#{Rails.root}/public/application.html" , type: 'text/html; charset=utf-8', disposition: 'inline'
   end
 end

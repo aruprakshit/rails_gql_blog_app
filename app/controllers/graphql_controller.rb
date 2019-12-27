@@ -10,7 +10,8 @@ class GraphqlController < ApplicationController
     operation_name = params[:operationName]
     context = {
       # Query context goes here, for example:
-      current_user: find_user,
+      current_user: current_user,
+      sign_in: ->(user) { sign_in(user) },
     }
     result = GqlBlogAppSchema.execute(query, variables: variables, context: context, operation_name: operation_name)
     render json: result
@@ -21,12 +22,19 @@ class GraphqlController < ApplicationController
 
   private
 
-  def find_user
-    email = request.headers['X-Email-Id']
+  def sign_in(user)
+    mitigate_session_fixation
+    session['X-Auth-Id'] = user.auth_token
+  end
 
-    if email
-      User.find_by_email(email)
-    end
+  def mitigate_session_fixation
+    old_values = session.to_hash
+    reset_session
+    session.update(old_values.except("session_id"))
+  end
+
+  def current_user
+    User.find_by_auth_token(session['X-Auth-Id'])
   end
 
   # Handle form data, JSON body, or a blank value
