@@ -37,5 +37,15 @@ module GqlBlogApp
     config.generators do |g|
       g.orm :active_record, primary_key_type: :uuid
     end
+
+    # https://edgeguides.rubyonrails.org/api_app.html#using-session-middlewares
+    config.session_store(
+      :cookie_store,
+      key: '_gql_blog_api_session',
+      httponly: true,
+      expire_after: 14.days
+    )  # <-- this also configures session_options for use below
+    config.middleware.use ActionDispatch::Cookies # Required for all session management (regardless of session_store)
+    config.middleware.use config.session_store
   end
 end

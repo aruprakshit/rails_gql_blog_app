@@ -54,3 +54,9 @@ class GraphqlController < ApplicationController
     render json: { error: { message: e.message, backtrace: e.backtrace }, data: {} }, status: 500
   end
 end
+
+# https://www.justinweiss.com/articles/how-rails-sessions-work/
+# https://medium.com/scaphold/authentication-in-graphql-25682de13787
+# https://guides.rubyonrails.org/api_app.html#choosing-middleware
+# https://api.rubyonrails.org/classes/ActionDispatch/Session/CookieStore.html
+# https://api.rubyonrails.org/classes/ActionDispatch/Cookies.html
