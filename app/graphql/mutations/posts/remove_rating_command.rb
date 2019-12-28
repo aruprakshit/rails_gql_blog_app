@@ -16,22 +16,9 @@ module Mutations
       end
 
       def resolve(rating_id:, post_id:)
-        post = Post.find(post_id)
-        rating = post.ratings.find(rating_id)
-
-        if rating.destroy
-          # Successful creation, return the created object with no errors
-          {
-            rating: rating,
-            errors: [],
-          }
-        else
-          # Failed save, return the errors to the client
-          {
-            rating: nil,
-            errors: rating.errors.full_messages
-          }
-        end
+        Resolvers::Ratings::PostsResolver
+          .new(context)
+          .destroy(rating_id: rating_id, post_id: post_id)
       end
     end
   end

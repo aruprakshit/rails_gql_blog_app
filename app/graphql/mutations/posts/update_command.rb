@@ -14,21 +14,9 @@ module Mutations
       end
 
       def resolve(body:, post_id:)
-        post = Post.find(post_id)
-
-        if post.update(body: body)
-          # Successful creation, return the created object with no errors
-          {
-            post: post,
-            errors: [],
-          }
-        else
-          # Failed save, return the errors to the client
-          {
-            post: nil,
-            errors: post.errors.full_messages
-          }
-        end
+        Resolvers::PostsResolver
+          .new(context)
+          .update(body: body, post_id: post_id)
       end
     end
   end

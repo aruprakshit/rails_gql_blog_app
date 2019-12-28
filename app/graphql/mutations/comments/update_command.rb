@@ -17,22 +17,9 @@ module Mutations
       end
 
       def resolve(body:, post_id:, comment_id:)
-        post = Post.find(post_id)
-        comment = post.comments.find(comment_id)
-
-        if comment.update(body: body)
-          # Successful creation, return the created object with no errors
-          {
-            comment: comment,
-            errors: [],
-          }
-        else
-          # Failed save, return the errors to the client
-          {
-            comment: nil,
-            errors: comment.errors.full_messages
-          }
-        end
+        Resolvers::CommentsResolver
+          .new(context)
+          .update(body: body, post_id: post_id, comment_id: comment_id)
       end
     end
   end

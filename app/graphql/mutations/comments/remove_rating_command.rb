@@ -16,22 +16,9 @@ module Mutations
       end
 
       def resolve(rating_id:, comment_id:)
-        comment = Comment.find(comment_id)
-        rating = comment.ratings.find(rating_id)
-
-        if rating.destroy
-          # Successful creation, return the created object with no errors
-          {
-            rating: rating,
-            errors: [],
-          }
-        else
-          # Failed save, return the errors to the client
-          {
-            rating: nil,
-            errors: rating.errors.full_messages
-          }
-        end
+        Resolvers::Ratings::CommentsResolver
+          .new(context)
+          .destroy(rating_id: rating_id, comment_id: comment_id)
       end
     end
   end

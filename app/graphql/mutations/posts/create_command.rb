@@ -13,24 +13,7 @@ module Mutations
       end
 
       def resolve(body:)
-        post = Post.new(
-          body: body,
-          user_id: context[:current_user].id
-        )
-
-        if post.save
-          # Successful creation, return the created object with no errors
-          {
-            post: post,
-            errors: [],
-          }
-        else
-          # Failed save, return the errors to the client
-          {
-            post: nil,
-            errors: post.errors.full_messages
-          }
-        end
+        Resolvers::PostsResolver.new(context).create(body: body)
       end
     end
   end

@@ -16,25 +16,9 @@ module Mutations
       end
 
       def resolve(category:, comment_id:)
-        comment = Comment.find(comment_id)
-        rating = comment.ratings.build(
-          category: category,
-          user_id: context[:current_user].id
-        )
-
-        if rating.save
-          # Successful creation, return the created object with no errors
-          {
-            rating: rating,
-            errors: [],
-          }
-        else
-          # Failed save, return the errors to the client
-          {
-            rating: nil,
-            errors: rating.errors.full_messages
-          }
-        end
+        Resolvers::Ratings::CommentsResolver
+          .new(context)
+          .create(category: category, comment_id: comment_id)
       end
     end
   end
