@@ -16,7 +16,7 @@ module Types
     end
 
     def me
-      Resolvers::UsersResolver.new(context, authenticate: false).show(id: context[:current_user].id)
+      Resolvers::UsersResolver.new(context).show(id: context[:current_user].id)
     end
 
     def all_users
