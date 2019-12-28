@@ -1,6 +1,32 @@
 import React from 'react';
-import { TextField, Button, Typography, Paper } from '@material-ui/core';
+import {
+  TextField,
+  Button,
+  Typography,
+  Paper,
+  CircularProgress,
+} from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
+import { gql } from 'apollo-boost';
+import { useMutation } from '@apollo/react-hooks';
+import SimpleSnackbar from '../Utils/SimpleSnackbar';
+
+const REGISTER_USER = gql`
+  mutation createUser($username: String!, $email: String!, $password: String!) {
+    signUp(email: $email, username: $username, password: $password) {
+      user {
+        id
+        username
+        email
+        ownedPosts {
+          body
+        }
+      }
+
+      errors
+    }
+  }
+`;
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -33,12 +59,25 @@ export default function RegisterationForm(props) {
   const { email, username, password } = formState;
   const classes = useStyles();
 
+  const [signUp, { data, loading, error }] = useMutation(REGISTER_USER, {
+    errorPolicy: 'all',
+  });
+
+  const handleSubmit = e => {
+    e.preventDefault();
+    signUp({ variables: { email, username, password } });
+  };
+
   return (
     <Paper className={classes.root} elevation={3}>
       <Typography variant='h4' align='center' gutterBottom>
         Sign Up
       </Typography>
-      <form className={classes.form} noValidate autoComplete='off'>
+      <form
+        className={classes.form}
+        noValidate
+        autoComplete='off'
+        onSubmit={handleSubmit}>
         <TextField
           id='filled-email'
           label='Email'
@@ -69,11 +108,32 @@ export default function RegisterationForm(props) {
           fullWidth
         />
         <div>
-          <Button color='primary' variant='contained' size='large'>
+          <Button
+            color='primary'
+            variant='contained'
+            size='large'
+            type='submit'>
             Register
           </Button>
+          {loading && <CircularProgress />}
         </div>
       </form>
+      <DisplayAlert loading={loading} error={error} data={data} />
     </Paper>
   );
+}
+
+function DisplayAlert({ loading, error, data }) {
+  if (!loading && (error !== undefined || data !== undefined)) {
+    if (data?.signUp?.errors?.length !== 0) {
+      return (
+        <SimpleSnackbar
+          content={data.signUp.errors.join('. ')}
+          showSnackbar={true}
+        />
+      );
+    }
+  }
+
+  return null;
 }
