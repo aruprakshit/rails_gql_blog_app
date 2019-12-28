@@ -1,13 +1,19 @@
 module Mutations
   class CreateSession < GraphQL::Schema::Mutation
-    argument :email,    String, required: true
+    argument :usr_or_email, String, required: true
     argument :password, String, required: true
 
     field :user, Types::UserType, null: true
     field :errors, [String, null: true], null: false
 
-    def resolve(email:, password:)
-      user = User.find_by(email: email)
+    def resolve(usr_or_email:, password:)
+      user = \
+        User
+          .where(
+            "email = :value OR username = :value",
+            {value: usr_or_email}
+          )
+          .first
 
       if user && user.authenticate(password)
         context[:sign_in].call(user) # Logged in user

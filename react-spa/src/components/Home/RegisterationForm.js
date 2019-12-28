@@ -9,7 +9,7 @@ import {
 import { makeStyles } from '@material-ui/core/styles';
 import { gql } from 'apollo-boost';
 import { useMutation } from '@apollo/react-hooks';
-import SimpleSnackbar from '../Utils/SimpleSnackbar';
+import DisplayAlert from './DisplayAlert';
 
 const REGISTER_USER = gql`
   mutation createUser($username: String!, $email: String!, $password: String!) {
@@ -59,9 +59,7 @@ export default function RegisterationForm(props) {
   const { email, username, password } = formState;
   const classes = useStyles();
 
-  const [signUp, { data, loading, error }] = useMutation(REGISTER_USER, {
-    errorPolicy: 'all',
-  });
+  const [signUp, { data, loading, error }] = useMutation(REGISTER_USER);
 
   const handleSubmit = e => {
     e.preventDefault();
@@ -105,6 +103,7 @@ export default function RegisterationForm(props) {
           onChange={handleChange}
           variant='filled'
           name='password'
+          type='password'
           fullWidth
         />
         <div>
@@ -118,22 +117,7 @@ export default function RegisterationForm(props) {
           {loading && <CircularProgress />}
         </div>
       </form>
-      <DisplayAlert loading={loading} error={error} data={data} />
+      <DisplayAlert loading={loading} error={error} data={data?.signUp} />
     </Paper>
   );
-}
-
-function DisplayAlert({ loading, error, data }) {
-  if (!loading && (error !== undefined || data !== undefined)) {
-    if (data?.signUp?.errors?.length !== 0) {
-      return (
-        <SimpleSnackbar
-          content={data.signUp.errors.join('. ')}
-          showSnackbar={true}
-        />
-      );
-    }
-  }
-
-  return null;
 }
