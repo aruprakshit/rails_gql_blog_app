@@ -6,7 +6,7 @@ module Types
 
     # CRUD
     # users
-    field :create_user, mutation: Mutations::Users::CreateCommand
+    field :sign_up, mutation: Mutations::Users::CreateCommand
 
     # posts
     field :create_post, mutation: Mutations::Posts::CreateCommand
