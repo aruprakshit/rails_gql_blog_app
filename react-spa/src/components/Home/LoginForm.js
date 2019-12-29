@@ -1,10 +1,18 @@
 import React from 'react';
-import { TextField, Button, Typography, Paper } from '@material-ui/core';
+import {
+  TextField,
+  Button,
+  Typography,
+  Paper,
+  CircularProgress,
+} from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import { gql } from 'apollo-boost';
 import { useMutation } from '@apollo/react-hooks';
+import { Redirect } from 'react-router-dom';
 
 import DisplayAlert from './DisplayAlert';
+import { useSession } from '../../hooks';
 
 const LOGIN_USER = gql`
   mutation signIn($usrOrEmail: String!, $password: String!) {
@@ -38,22 +46,39 @@ const useStyles = makeStyles(theme => ({
 }));
 
 export default function LoginForm(props) {
+  const classes = useStyles();
+
+  const { isAuthenticated, authenticate } = useSession();
+
   const [formState, setFormState] = React.useState({
-    usr_or_email: '',
+    usrOrEmail: '',
     password: '',
   });
+
+  const [logIn, { data, loading, error }] = useMutation(LOGIN_USER, {
+    onCompleted: data => {
+      if (data.logIn.errors.length === 0) {
+        authenticate();
+      }
+    },
+  });
+
   const handleChange = event => {
     const { name, value } = event.target;
 
     setFormState(prevState => ({ ...prevState, [name]: value }));
   };
+
   const { usrOrEmail, password } = formState;
-  const classes = useStyles();
-  const [logIn, { data, loading, error }] = useMutation(LOGIN_USER);
+
   const handleSubmit = e => {
     e.preventDefault();
     logIn({ variables: { usrOrEmail, password } });
   };
+
+  if (isAuthenticated) {
+    return <Redirect to='/posts' />;
+  }
 
   return (
     <Paper className={classes.root} elevation={3}>
@@ -67,7 +92,7 @@ export default function LoginForm(props) {
         onSubmit={handleSubmit}>
         <TextField
           id='filled-usr_or_email'
-          label='Email'
+          label='Email/Username'
           value={usrOrEmail}
           onChange={handleChange}
           variant='filled'
@@ -93,6 +118,7 @@ export default function LoginForm(props) {
             type='submit'>
             Log In
           </Button>
+          {loading && <CircularProgress />}
         </div>
       </form>
       <DisplayAlert loading={loading} error={error} data={data?.logIn} />
