@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 
 export function useSession() {
   const [isAuthenticated, setIsAuthenticated] = useState(
-    localStorage.getItem('isAuthenticated') ?? false
+    JSON.parse(localStorage.getItem('isAuthenticated')) ?? false
   );
 
   useEffect(() => {
@@ -12,8 +12,6 @@ export function useSession() {
       localStorage.removeItem('isAuthenticated');
     }
   }, [isAuthenticated]);
-
-  console.log('useSession', isAuthenticated);
 
   const authenticate = () => {
     setIsAuthenticated(true);

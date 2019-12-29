@@ -1,5 +1,5 @@
 import React from 'react';
-import SimpleSnackbar from '../Utils/SimpleSnackbar';
+import SimpleSnackbar from './SimpleSnackbar';
 
 export default function DisplayAlert({ loading, error, data }) {
   if (!loading && (error !== undefined || data !== undefined)) {

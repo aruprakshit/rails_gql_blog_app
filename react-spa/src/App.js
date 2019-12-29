@@ -9,7 +9,7 @@ import Posts from './components/Posts';
 import './App.css';
 
 const client = new ApolloClient({
-  uri: 'http://localhost:3000/graphql',
+  uri: '/graphql',
 });
 
 function App() {

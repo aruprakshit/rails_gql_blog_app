@@ -9,7 +9,7 @@ import {
 import { makeStyles } from '@material-ui/core/styles';
 import { gql } from 'apollo-boost';
 import { useMutation } from '@apollo/react-hooks';
-import DisplayAlert from './DisplayAlert';
+import DisplayAlert from '../Utils/DisplayAlert';
 
 const REGISTER_USER = gql`
   mutation createUser($username: String!, $email: String!, $password: String!) {

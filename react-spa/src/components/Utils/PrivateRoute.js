@@ -5,7 +5,6 @@ import { useSession } from '../../hooks';
 
 export default function PrivateRoute({ component: Component, ...rest }) {
   const { isAuthenticated } = useSession();
-  console.log(isAuthenticated);
 
   return (
     <Route

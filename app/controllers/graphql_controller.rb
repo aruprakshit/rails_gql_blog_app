@@ -34,6 +34,7 @@ class GraphqlController < ApplicationController
   end
 
   def current_user
+    puts "Auth ID: #{session['X-Auth-Id']}"
     User.find_by_auth_token(session['X-Auth-Id'])
   end
 

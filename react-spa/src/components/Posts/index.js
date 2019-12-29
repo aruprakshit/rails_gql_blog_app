@@ -1,5 +1,23 @@
 import React from 'react';
+import { makeStyles } from '@material-ui/core/styles';
+import { Grid } from '@material-ui/core';
 
-export default function Posts(props) {
-  return <h1>'On going...'</h1>;
+import Header from '../Header';
+
+const useStyles = makeStyles(theme => ({
+  root: {
+    flexGrow: 1,
+  },
+}));
+
+export default function Posts() {
+  const classes = useStyles();
+
+  return (
+    <div className={classes.root}>
+      <Grid spacing={3} container>
+        <Header />
+      </Grid>
+    </div>
+  );
 }

@@ -5,6 +5,7 @@ module Mutations
 
     def resolve()
       user = context[:current_user]
+      puts "Context: #{user}"
 
       if user && user.regenerate_auth_token
         {

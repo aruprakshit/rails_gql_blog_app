@@ -11,7 +11,7 @@ import { gql } from 'apollo-boost';
 import { useMutation } from '@apollo/react-hooks';
 import { Redirect } from 'react-router-dom';
 
-import DisplayAlert from './DisplayAlert';
+import DisplayAlert from '../Utils/DisplayAlert';
 import { useSession } from '../../hooks';
 
 const LOGIN_USER = gql`
