@@ -3,6 +3,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import { Grid } from '@material-ui/core';
 
 import Header from '../Header';
+import PostList from './PostList';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -17,6 +18,7 @@ export default function Posts() {
     <div className={classes.root}>
       <Grid spacing={3} container>
         <Header />
+        <PostList />
       </Grid>
     </div>
   );

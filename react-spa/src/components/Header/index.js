@@ -13,7 +13,6 @@ const useStyles = makeStyles(theme => ({
     padding: theme.spacing(3),
     color: theme.palette.text.secondary,
     backgroundColor: lightBlue[500],
-    borderRadius: 0,
     display: 'flex',
 
     '& .MuiButton-root': {
@@ -50,7 +49,7 @@ export default function Header() {
 
   return (
     <Grid item xs={12}>
-      <Paper className={classes.root} elevation={3}>
+      <Paper className={classes.root} elevation={3} square>
         <Button variant='contained' onClick={onClickHandler}>
           Log Out
         </Button>
