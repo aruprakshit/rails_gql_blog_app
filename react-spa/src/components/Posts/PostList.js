@@ -3,15 +3,16 @@ import { makeStyles } from '@material-ui/core/styles';
 import {
   Paper,
   Grid,
+  Box,
   LinearProgress,
   ButtonGroup,
   Button,
+  Icon,
 } from '@material-ui/core';
 import { gql } from 'apollo-boost';
 import { useQuery } from '@apollo/react-hooks';
 import { lightBlue, green, red } from '@material-ui/core/colors';
-
-import { useSession } from '../../hooks';
+import { Link } from 'react-router-dom';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -51,23 +52,40 @@ const FETCH_ALL_POSTS = gql`
   }
 `;
 
-export default function PostList() {
+export default function PostList({ match, history }) {
   const classes = useStyles();
-  const { logOut } = useSession();
-  const { loading, error, data } = useQuery(FETCH_ALL_POSTS);
-  console.log('LOADING', loading);
+  const { loading, data } = useQuery(FETCH_ALL_POSTS);
 
   return (
     <Grid container item xs={12} spacing={3} className={classes.root}>
       <Loading loading={loading} />
+      <Grid item xs={10}>
+        <Box position='fixed' top='15%' right={30} zIndex='modal'>
+          <Link to={`${match.path}/new`}>
+            <Icon style={{ color: green[500], fontSize: 60 }}>add_circle</Icon>
+          </Link>
+        </Box>
+      </Grid>
       {!loading &&
-        data.allPosts.map(post => <PostItem key={post.id} {...post} />)}
+        data.allPosts.map(post => (
+          <PostItem key={post.id} {...post} match={match} history={history} />
+        ))}
     </Grid>
   );
 }
 
-function PostItem({ body }) {
+function PostItem({ body, id, match, history }) {
   const classes = useStyles();
+  const redirctTo = actionName => e => {
+    e.preventDefault();
+
+    switch (actionName) {
+      case 'show':
+        return history.push(`${match.path}/${id}`);
+      default:
+        break;
+    }
+  };
   return (
     <Grid item xs={10}>
       <Paper elevation={5} className={classes.paper}>
@@ -78,7 +96,7 @@ function PostItem({ body }) {
           <Grid item xs={12}>
             <div className={classes.ButtonGroupRoot}>
               <ButtonGroup variant='text' aria-label='text button group'>
-                <Button>Show</Button>
+                <Button onClick={redirctTo('show')}>Show</Button>
                 <Button>Edit</Button>
                 <Button>Delete</Button>
               </ButtonGroup>
