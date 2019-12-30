@@ -11,7 +11,7 @@ import {
 } from '@material-ui/core';
 import { gql } from 'apollo-boost';
 import { useQuery } from '@apollo/react-hooks';
-import { lightBlue, green, red } from '@material-ui/core/colors';
+import { lightBlue, green, red, grey } from '@material-ui/core/colors';
 import { Link } from 'react-router-dom';
 
 const useStyles = makeStyles(theme => ({
@@ -38,6 +38,9 @@ const useStyles = makeStyles(theme => ({
   ButtonGroupRoot: {
     display: 'flex',
   },
+  author: {
+    color: grey[900],
+  },
 }));
 
 const FETCH_ALL_POSTS = gql`
@@ -60,7 +63,7 @@ export default function PostList({ match, history }) {
     <Grid container item xs={12} spacing={3} className={classes.root}>
       <Loading loading={loading} />
       <Grid item xs={10}>
-        <Box position='fixed' top='15%' right={30} zIndex='modal'>
+        <Box position='fixed' bottom={15} right={30} zIndex='modal'>
           <Link to={`${match.path}/new`}>
             <Icon style={{ color: green[500], fontSize: 60 }}>add_circle</Icon>
           </Link>
@@ -74,7 +77,7 @@ export default function PostList({ match, history }) {
   );
 }
 
-function PostItem({ body, id, match, history }) {
+function PostItem({ body, id, match, history, owner }) {
   const classes = useStyles();
   const redirctTo = actionName => e => {
     e.preventDefault();
@@ -82,6 +85,8 @@ function PostItem({ body, id, match, history }) {
     switch (actionName) {
       case 'show':
         return history.push(`${match.path}/${id}`);
+      case 'edit':
+        return history.push(`${match.path}/${id}/edit`);
       default:
         break;
     }
@@ -94,13 +99,14 @@ function PostItem({ body, id, match, history }) {
             {body}
           </Grid>
           <Grid item xs={12}>
-            <div className={classes.ButtonGroupRoot}>
+            <Box className={classes.ButtonGroupRoot}>
+              <Box className={classes.author}>Posted by {owner.username}</Box>
               <ButtonGroup variant='text' aria-label='text button group'>
                 <Button onClick={redirctTo('show')}>Show</Button>
-                <Button>Edit</Button>
+                <Button onClick={redirctTo('edit')}>Edit</Button>
                 <Button>Delete</Button>
               </ButtonGroup>
-            </div>
+            </Box>
           </Grid>
         </Grid>
       </Paper>

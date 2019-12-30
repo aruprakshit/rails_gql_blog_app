@@ -1,10 +1,11 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import { Paper, Button, Grid } from '@material-ui/core';
-import { lightBlue, green } from '@material-ui/core/colors';
+import { Paper, Button, Grid, Icon } from '@material-ui/core';
+import { lightBlue, red, brown } from '@material-ui/core/colors';
 import { gql } from 'apollo-boost';
 import { useMutation } from '@apollo/react-hooks';
 import DisplayAlert from '../Utils/DisplayAlert';
+import { Link } from 'react-router-dom';
 
 import { useSession } from '../../hooks';
 
@@ -14,9 +15,8 @@ const useStyles = makeStyles(theme => ({
     color: theme.palette.text.secondary,
     backgroundColor: lightBlue[500],
     display: 'flex',
-
     '& .MuiButton-root': {
-      backgroundColor: green[500],
+      backgroundColor: red['A400'],
       marginLeft: 'auto',
     },
   },
@@ -50,6 +50,9 @@ export default function Header() {
   return (
     <Grid item xs={12}>
       <Paper className={classes.root} elevation={3} square>
+        <Link to='/'>
+          <Icon style={{ fontSize: 40, color: brown[700] }}>home</Icon>
+        </Link>
         <Button variant='contained' onClick={onClickHandler}>
           Log Out
         </Button>

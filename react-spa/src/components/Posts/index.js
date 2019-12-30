@@ -6,6 +6,7 @@ import { Route, Switch } from 'react-router-dom';
 import Header from '../Header';
 import PostList from './PostList';
 import NewPost from './NewPost';
+import EditPost from './EditPost';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -22,6 +23,7 @@ export default function Posts({ match }) {
         <Header />
         <Switch>
           <Route path={`${match.path}/new`} component={NewPost} />
+          <Route path={`${match.path}/:postId/edit`} component={EditPost} />
           <Route path={`${match.path}/:postId`} component={NewPost} />
           <Route exact path={`${match.path}`} component={PostList} />
         </Switch>

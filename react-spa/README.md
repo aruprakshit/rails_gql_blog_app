@@ -4,3 +4,4 @@
 - https://www.apollographql.com/docs/react/data/mutations/
 - https://reacttraining.com/react-router/web/api/Route/component
 - https://tylermcginnis.com/react-router-protected-routes-authentication/
+- https://material.io/resources/icons/?style=baseline
