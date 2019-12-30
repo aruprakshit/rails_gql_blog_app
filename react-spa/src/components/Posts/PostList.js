@@ -1,8 +1,15 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import { Paper, Grid, LinearProgress, Box } from '@material-ui/core';
+import {
+  Paper,
+  Grid,
+  LinearProgress,
+  ButtonGroup,
+  Button,
+} from '@material-ui/core';
 import { gql } from 'apollo-boost';
 import { useQuery } from '@apollo/react-hooks';
+import { lightBlue, green, red } from '@material-ui/core/colors';
 
 import { useSession } from '../../hooks';
 
@@ -12,9 +19,23 @@ const useStyles = makeStyles(theme => ({
     justifyContent: 'center',
   },
   paper: {
-    padding: theme.spacing(1),
+    padding: theme.spacing(1.5),
     color: theme.palette.text.secondary,
-    height: theme.spacing(10),
+    '& .MuiButtonGroup-root': {
+      marginLeft: 'auto',
+    },
+    '& .MuiButton-text:first-child': {
+      color: lightBlue[600],
+    },
+    '& .MuiButton-text:nth-child(2)': {
+      color: green[600],
+    },
+    '& .MuiButton-text:last-child': {
+      color: red[600],
+    },
+  },
+  ButtonGroupRoot: {
+    display: 'flex',
   },
 }));
 
@@ -34,6 +55,7 @@ export default function PostList() {
   const classes = useStyles();
   const { logOut } = useSession();
   const { loading, error, data } = useQuery(FETCH_ALL_POSTS);
+  console.log('LOADING', loading);
 
   return (
     <Grid container item xs={12} spacing={3} className={classes.root}>
@@ -45,10 +67,24 @@ export default function PostList() {
 }
 
 function PostItem({ body }) {
+  const classes = useStyles();
   return (
     <Grid item xs={10}>
-      <Paper elevation={5}>
-        <Box>{body}</Box>
+      <Paper elevation={5} className={classes.paper}>
+        <Grid container spacing={2}>
+          <Grid item xs={12}>
+            {body}
+          </Grid>
+          <Grid item xs={12}>
+            <div className={classes.ButtonGroupRoot}>
+              <ButtonGroup variant='text' aria-label='text button group'>
+                <Button>Show</Button>
+                <Button>Edit</Button>
+                <Button>Delete</Button>
+              </ButtonGroup>
+            </div>
+          </Grid>
+        </Grid>
       </Paper>
     </Grid>
   );

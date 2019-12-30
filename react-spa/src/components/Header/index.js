@@ -37,7 +37,7 @@ export default function Header() {
   const [logOut, { data, loading, error }] = useMutation(LOGOUT_USER, {
     onCompleted: data => {
       if (data.logOut.errors.length === 0) {
-        signOut();
+        signOut(() => window.location.reload());
       }
     },
   });

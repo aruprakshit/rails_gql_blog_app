@@ -17,8 +17,9 @@ export function useSession() {
     setIsAuthenticated(true);
   };
 
-  const logOut = () => {
+  const logOut = cb => {
     setIsAuthenticated(false);
+    cb();
   };
 
   return { isAuthenticated, authenticate, logOut };
