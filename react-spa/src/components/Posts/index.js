@@ -7,6 +7,7 @@ import Header from '../Header';
 import PostList from './PostList';
 import NewPost from './NewPost';
 import EditPost from './EditPost';
+import ShowPost from './ShowPost';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -24,7 +25,7 @@ export default function Posts({ match }) {
         <Switch>
           <Route path={`${match.path}/new`} component={NewPost} />
           <Route path={`${match.path}/:postId/edit`} component={EditPost} />
-          <Route path={`${match.path}/:postId`} component={NewPost} />
+          <Route path={`${match.path}/:postId`} component={ShowPost} />
           <Route exact path={`${match.path}`} component={PostList} />
         </Switch>
       </Grid>

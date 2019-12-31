@@ -1,18 +1,11 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import {
-  Paper,
-  Grid,
-  Box,
-  LinearProgress,
-  ButtonGroup,
-  Button,
-  Icon,
-} from '@material-ui/core';
+import { Paper, Grid, Box, ButtonGroup, Button, Icon } from '@material-ui/core';
 import { gql } from 'apollo-boost';
 import { useQuery } from '@apollo/react-hooks';
 import { lightBlue, green, red, grey } from '@material-ui/core/colors';
 import { Link } from 'react-router-dom';
+import { QueryLoading } from './Loaders';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -61,7 +54,7 @@ export default function PostList({ match, history }) {
 
   return (
     <Grid container item xs={12} spacing={3} className={classes.root}>
-      <Loading loading={loading} />
+      <QueryLoading loading={loading} />
       <Grid item xs={10}>
         <Box position='fixed' bottom={15} right={30} zIndex='modal'>
           <Link to={`${match.path}/new`}>
@@ -110,16 +103,6 @@ function PostItem({ body, id, match, history, owner }) {
           </Grid>
         </Grid>
       </Paper>
-    </Grid>
-  );
-}
-
-function Loading({ loading }) {
-  if (!loading) return null;
-
-  return (
-    <Grid item xs={10}>
-      <LinearProgress variant='query' />
     </Grid>
   );
 }
