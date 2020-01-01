@@ -1,18 +1,23 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import { Grid, Paper, Typography, Box, Icon } from '@material-ui/core';
+import { Grid, Paper, Typography } from '@material-ui/core';
 import { gql } from 'apollo-boost';
 import { useQuery } from '@apollo/react-hooks';
-import { green, red } from '@material-ui/core/colors';
 
 import DisplayAlert from '../Utils/DisplayAlert';
 import { QueryLoading } from './Loaders';
+import RatePost from './RatePost';
 
 const FETCH_POST = gql`
   query fetchAPost($id: ID!) {
     post(id: $id) {
       id
       body
+      ratings {
+        category
+        id
+        weight
+      }
     }
   }
 `;
@@ -40,9 +45,10 @@ const useStyles = makeStyles(theme => ({
 
 export default function ShowPost({ match }) {
   const classes = useStyles();
+  const { postId } = match.params;
 
   const { data, loading, error } = useQuery(FETCH_POST, {
-    variables: { id: match.params.postId },
+    variables: { id: postId },
   });
 
   if (loading && data === void 0) {
@@ -53,28 +59,16 @@ export default function ShowPost({ match }) {
     );
   }
 
-  const { body } = data.post;
+  const { body, ratings } = data.post;
+  const ratingProps = { postId, ratings };
 
   return (
     <Grid item xs={12}>
       <Paper className={classes.root} square elevation={5}>
         <Grid container spacing={1}>
-          <Grid item xs={1} className={classes.votesContainer}>
-            <Box>
-              <Icon style={{ color: green[600], fontSize: 25 }}>
-                arrow_upward
-              </Icon>
-            </Box>
-            <Box>
-              <Icon style={{ color: red[600], fontSize: 25 }}>
-                arrow_downward
-              </Icon>
-            </Box>
-          </Grid>
+          <RatePost {...ratingProps} />
           <Grid item xs={11}>
             <Typography variant='body1' gutterBottom>
-              {body}
-              {body}
               {body}
             </Typography>
           </Grid>

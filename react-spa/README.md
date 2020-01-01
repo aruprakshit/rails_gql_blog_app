@@ -5,3 +5,8 @@
 - https://reacttraining.com/react-router/web/api/Route/component
 - https://tylermcginnis.com/react-router-protected-routes-authentication/
 - https://material.io/resources/icons/?style=baseline
+- https://usehooks.com/useMemo/
+
+# Features
+
+- [ ] Implement Apollo client caching where it is needed.
