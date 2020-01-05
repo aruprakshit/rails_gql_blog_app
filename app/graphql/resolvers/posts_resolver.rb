@@ -1,7 +1,7 @@
 module Resolvers
   class PostsResolver < BaseResolver
     def index
-      Post.all
+      Post.includes(:comments)
     end
 
     def show(id:)

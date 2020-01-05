@@ -7,6 +7,7 @@ import { useQuery } from '@apollo/react-hooks';
 import DisplayAlert from '../Utils/DisplayAlert';
 import { QueryLoading } from './Loaders';
 import RatePost from './RatePost';
+import Comments from '../Comments';
 
 const FETCH_POST = gql`
   query fetchAPost($id: ID!) {
@@ -17,6 +18,13 @@ const FETCH_POST = gql`
         category
         id
         weight
+      }
+      comments {
+        id
+        body
+        owner {
+          username
+        }
       }
     }
   }
@@ -59,8 +67,9 @@ export default function ShowPost({ match }) {
     );
   }
 
-  const { body, ratings } = data.post;
+  const { body, ratings, comments } = data.post;
   const ratingProps = { postId, ratings };
+  const commentProps = { postId, comments };
 
   return (
     <Grid item xs={12}>
@@ -71,6 +80,10 @@ export default function ShowPost({ match }) {
             <Typography variant='body1' gutterBottom>
               {body}
             </Typography>
+          </Grid>
+          <Grid item xs={1}></Grid>
+          <Grid item xs={11}>
+            <Comments {...commentProps} />
           </Grid>
         </Grid>
       </Paper>
