@@ -81,10 +81,7 @@ export default function ShowPost({ match }) {
               {body}
             </Typography>
           </Grid>
-          <Grid item xs={1}></Grid>
-          <Grid item xs={11}>
-            <Comments {...commentProps} />
-          </Grid>
+          <Comments {...commentProps} />
         </Grid>
       </Paper>
       <DisplayAlert loading={loading} error={error} data={data.post} />
