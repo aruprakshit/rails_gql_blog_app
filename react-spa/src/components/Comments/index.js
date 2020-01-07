@@ -24,6 +24,11 @@ const CREATE_COMMENT = gql`
         owner {
           email
         }
+
+        ratings {
+          id
+          category
+        }
       }
     }
   }

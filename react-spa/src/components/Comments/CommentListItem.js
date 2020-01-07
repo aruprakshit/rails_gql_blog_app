@@ -1,8 +1,8 @@
 import React from 'react';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemText from '@material-ui/core/ListItemText';
-import Typography from '@material-ui/core/Typography';
+import { ListItemText, Box, ListItem, Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
+
+import RateComment from './RateComment';
 
 const useStyles = makeStyles(theme => ({
   inline: {
@@ -10,14 +10,14 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export default function CommentListItem({ id, body, owner }) {
+export default function CommentListItem({ id, body, owner, ratings }) {
   const classes = useStyles();
 
   return (
     <ListItem alignItems='flex-start' divider>
       <ListItemText
         secondary={
-          <React.Fragment>
+          <Box>
             <Typography
               component='span'
               variant='body2'
@@ -26,7 +26,8 @@ export default function CommentListItem({ id, body, owner }) {
               {owner.username}
             </Typography>
             {` — ${body}`}
-          </React.Fragment>
+            <RateComment commentId={id} ratings={ratings} />
+          </Box>
         }
       />
     </ListItem>

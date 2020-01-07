@@ -25,6 +25,11 @@ const FETCH_POST = gql`
         owner {
           username
         }
+        ratings {
+          id
+          category
+          weight
+        }
       }
     }
   }
